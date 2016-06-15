@@ -2,7 +2,7 @@
 > Middleware for setting default values in requests.
 
 Currently the middleware supports `params` and `query`.  `body` is considered to be somewhat complicated
-at this time; however, PRs are welcomed.
+at this time, however it works if the body is a JSON format; however, PRs are welcomed for other body types such as XML.
 
 ## Example
 ```javascript
@@ -10,12 +10,13 @@ var expressDefaults = require('express-defaults');
 var express = require('express');
 var app = express();
 
-app.get('/hello', expressDefaults({params: {world: 'John'}, query: {space: 'Bob'}}),
+app.get('/hello', expressDefaults({params: {world: 'John'}, query: {space: 'Bob'}, body: {alien: 'Ziggy'}}),
     function(req, res) {
 
   /*
     req.params.world will be set to 'John' if not given in the request.
     req.query.space will be set to 'Bob' if not given in the request.
+    req.body.alien will be set to 'Ziggy' if not given in the request.
   */
 
 });
