@@ -7,6 +7,9 @@ var sample = {
   },
   query: {
     boo: 4
+  },
+  body: {
+    bar: 6
   }
 };
 
@@ -28,23 +31,25 @@ assert.ok(called);
 // should not override request values
 sut = expressDefaults(sample);
 called = false;
-req = {params: {foo: 6}, query: {boo: 10}};
+req = {params: {foo: 6}, query: {boo: 10}, body: {bar:7}};
 res = null;
 sut(req, res, function() {
   called = true;
 });
 assert.equal(req.params.foo, 6);
 assert.equal(req.query.boo, 10);
+assert.equal(req.body.bar, 7);
 assert.ok(called);
 
 // should set undefined request values
 sut = expressDefaults(sample);
 called = false;
-req = {params: {}, query: {}};
+req = {params: {}, query: {}, body: {}};
 res = null;
 sut(req, res, function() {
   called = true;
 });
 assert.equal(req.params.foo, 5);
 assert.equal(req.query.boo, 4);
+assert.equal(req.body.bar, 6);
 assert.ok(called);
